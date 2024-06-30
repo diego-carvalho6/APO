@@ -1,26 +1,30 @@
 $(document).ready(function() {
-    const $dataNascimento = $('#data-nascimento');
-    const $idade = $('#idade');
-    const $addExperiencia = $('#add-experiencia');
-    const $experiencias = $('#experiencias');
+    const $birthDateInput = $('#data-nascimento');
+    const $age = $('#idade');
+    const $addExperienceButton = $('#add-experiencia');
+    const $experiences = $('#experiencias');
 
-    $dataNascimento.on('change', function() {
-        const hoje = new Date();
-        const nascimento = new Date($dataNascimento.val());
-        let idadeCalculada = hoje.getFullYear() - nascimento.getFullYear();
-        const mes = hoje.getMonth() - nascimento.getMonth();
-        if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
-            idadeCalculada--;
+    $birthDateInput.on('change', function() {
+        const today = new Date();
+        const birthday = new Date($birthDateInput.val());
+        let resultDate = today.getFullYear() - birthday.getFullYear();
+        const month = today.getMonth() - birthday.getMonth();
+        if (month < 0 || (month === 0 && today.getDate() < birthday.getDate())) {
+            resultDate--;
         }
-        $idade.val(idadeCalculada);
+        $age.val(resultDate);
     });
 
-    $addExperiencia.on('click', function() {
+    $addExperienceButton.on('click', function() {
         const $div = $('<div>', { class: 'form-group' });
         const $label = $('<label>', { for: 'experiencia', text: 'Experiência:' });
         const $input = $('<input>', { type: 'text', name: 'experiencia[]', class: 'form-control' });
 
         $div.append($label, $input);
-        $experiencias.append($div);
+        $experiences.append($div);
     });
 });
+
+function printPage() {
+    window.print();
+}
