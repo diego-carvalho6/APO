@@ -1,42 +1,45 @@
 <?php
-// Inclui o arquivo de configuração da conexão com o banco de dados
-include 'db.php';
 
-function ListCurriculum($conn) {
-$sql = "
-    SELECT *
-    FROM resumes r
-    ORDER BY r.id DESC";
-$resultResumes = $conn->query($sql);
+function ListCurriculum() {
+    include 'db.php';
 
-$sql = "
-    SELECT *
-    FROM experiences r
-    ORDER BY r.id DESC";
-$resultExperiences = $conn->query($sql);
+    $sqlResumes = "
+        SELECT *
+        FROM resumes r
+        ORDER BY r.id DESC";
+    $resultResumes = $conn->query($sqlResumes);
 
-$curriculos = array();
+    $sqlExperiences = "
+        SELECT *
+        FROM experiences r
+        ORDER BY r.id DESC";
+    $resultExperiences = $conn->query($sqlExperiences);
 
-if ($resultResumes->num_rows > 0) {
-    while ($row = $resultResumes->fetch_assoc()) {
+    $curriculos = array();
 
-        $experiences = array();
 
-        if ($resultExperiences->num_rows > 0) {
-            while ($rowExperiences = $resultExperiences->fetch_assoc()) {
-                if ($rowExperiences['resume_id'] == $row['id']) {
-                    $experiences[] = $rowExperiences;
-                }
-            }
-        }
+    $dataExperiences = array();
 
-        $row['experiences'] = $experiences;
-        $curriculos[] = $row;
+    while ($rowExperiences = $resultExperiences->fetch_assoc()) {
+        $dataExperiences[] = $rowExperiences;
     }
+
+    if ($resultResumes->num_rows > 0) {
+        while ($row = $resultResumes->fetch_assoc()) {
+            // Filtra as experiências relacionadas ao currículo atual
+            $experiences = array_filter($dataExperiences, function($experience) use ($row) {
+                return $experience['resume_id'] == $row['id'];
+            });
+
+            $row['experiences'] = $experiences;
+            $curriculos[] = $row;
+        }
+    }
+
+    return $curriculos;
 }
 
-$conn->close();
+$curriculos = ListCurriculum();
 
-return $curriculos;
-}
+echo json_encode($curriculos);
 ?>
