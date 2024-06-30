@@ -1,113 +1,97 @@
-Curriculum Management System
-Overview
+# Curriculum Management System
+
 This project is a web application for managing resumes (curriculums). Users can create, search, filter, and list all resumes. Additionally, the application provides an option to download resumes as PDFs. The project uses PHP, MySQL, JavaScript, and jQuery, and is hosted on a XAMPP server.
 
-Project Structure
-Root Directory (/)
+## Project Structure
+
+### Root Directory (/)
 Main entry point for the application.
-Users Listing (/users.php)
-Displays a list of all users.
-User Form (/user-form.php)
-Form for creating and editing user resumes.
-User Detail (/user.php)
-Displays detailed information about a single user.
-Not Found (/not-found)
-Error page for handling 404 errors.
-Setup Instructions
 
-All this routes can by accessed by routing the nav bar.
+### Routes
+- **Users Listing** (`/users.php`): Displays a list of all users.
+- **User Form** (`/user-form.php`): Form for creating and editing user resumes.
+- **User Detail** (`/user.php`): Displays detailed information about a single user.
+- **Not Found** (`/not-found`): Error page for handling 404 errors.
 
-Prerequisites
-XAMPP: Ensure that you have XAMPP installed on your system.
-PHP: PHP should be included with your XAMPP installation.
-MySQL: MySQL should be included with your XAMPP installation.
-Steps
-Clone the Repository
+All these routes can be accessed via the navigation bar.
 
-Clone the project repository to your local machine.
+## Setup Instructions
 
-bash
-Copy code
-git clone https://github.com/your-username/curriculum-management-system.git
-Start XAMPP
+### Prerequisites
+- **XAMPP**: Ensure that you have XAMPP installed on your system.
+- **PHP**: PHP should be included with your XAMPP installation.
+- **MySQL**: MySQL should be included with your XAMPP installation.
 
-Open XAMPP Control Panel and start the Apache and MySQL services.
+### Steps
 
-Database Setup
+1. **Clone the Repository**
+    ```bash
+    git clone https://github.com/your-username/curriculum-management-system.git
+    ```
 
-Open PHPMyAdmin by navigating to http://localhost/phpmyadmin.
-Create a new database named curriculum_db.
-Import the db.sql file located in the root of the project to set up the necessary tables.
-Configure Database Connection
+2. **Start XAMPP**
+    - Open XAMPP Control Panel and start the Apache and MySQL services.
 
-Edit the db.php file located in the assets/php/ directory to match your database configuration.
+3. **Database Setup**
+    - Open PHPMyAdmin by navigating to [http://localhost/phpmyadmin](http://localhost/phpmyadmin).
+    - Create a new database named `curriculum_db`.
+    - Import the `db.sql` file located in the root of the project to set up the necessary tables.
 
-php
-Copy code
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "curriculum_db";
+4. **Configure Database Connection**
+    - Edit the `db.php` file located in the `assets/php/` directory to match your database configuration.
+    ```php
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    ```
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+5. **Place Files in XAMPP's htdocs Directory**
+    ```bash
+    cp -r curriculum-management-system /path/to/xampp/htdocs/curriculum
+    ```
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-?>
-Place Files in XAMPP's htdocs Directory
+6. **Access the Application**
+    - Open your web browser and navigate to [http://localhost/curriculum](http://localhost/curriculum).
 
-Copy the project files to the htdocs directory of your XAMPP installation.
+## Features
 
-bash
-Copy code
-cp -r curriculum-management-system /path/to/xampp/htdocs/curriculum
-Access the Application
+- **Create Resume**
+    - Navigate to `/user-form.php` to create a new resume. Fill out the form with the necessary details and submit.
+  
+- **List All Resumes**
+    - Navigate to `/users.php` to see a list of all resumes in the database.
 
-Open your web browser and navigate to http://localhost/curriculum.
+- **Search and Filter Resumes**
+    - Use the search functionality on the main page or `/users.php` to filter resumes by various criteria.
 
-Features
-Create Resume
+- **Download Resume as PDF**
+    - Each resume detail page (`/user.php?id=1` for example) provides an option to download the resume as a PDF.
 
-Navigate to /user-form.php to create a new resume. Fill out the form with the necessary details and submit.
+## File Structure
 
-List All Resumes
-
-Navigate to /users.php to see a list of all resumes in the database.
-
-Search and Filter Resumes
-
-Use the search functionality on the main page or /users.php to filter resumes by various criteria.
-
-Download Resume as PDF
-
-Each resume detail page (/user.php?id=1 for example) provides an option to download the resume as a PDF.
-
-File Structure
-plaintext
-Copy code
 curriculum/
-│
 ├── assets/
-│   ├── css/
-│   │   └── styles.css
-│   ├── js/
-│   │   └── script.js
-│   └── php/
-│       ├── db.php
-│       ├── insertCurriculum.php
-│       ├── listCurriculum.php
-│       └── searchCurriculum.php
+│ ├── css/
+│ │ └── styles.css
+│ ├── js/
+│ │ └── script.js
+│ └── php/
+│ ├── db.php
+│ ├── insertCurriculum.php
+│ ├── listCurriculum.php
+│ └── searchCurriculum.php
 ├── pages
-│   ├── index.php
-│   ├── users.php
-│   ├── user-form.php
-│   ├── user.php
-│   └── not-found.php
+│ ├── index.php
+│ ├── users.php
+│ ├── user-form.php
+│ ├── user.php
+│ └── not-found.php
 └── index.html
-Troubleshooting
-Database Connection Issues: Ensure your db.php file has the correct database credentials, enter your local environment in db.php and ensure to create the database with the sample name.
-404 Errors: Ensure all files are correctly placed in the htdocs/curriculum directory and that you are navigating to the correct URL.
+
+
+## Troubleshooting
+
+- **Database Connection Issues**: Ensure your `db.php` file has the correct database credentials. Enter your local environment in `db.php` and ensure to create the database with the sample name.
+- **404 Errors**: Ensure all files are correctly placed in the `htdocs/curriculum` directory and that you are navigating to the correct URL.
+
