@@ -39,7 +39,7 @@ function handleValidate() {
     }
 
     $name = $data['name'] ?? null;
-    $birthDay = $data['birthday'] ?? null;
+    $birthday = $data['birthday'] ?? null;
     $age = $data['age'] ?? null;
     $experiences = $data['experiencies'] ?? [];
 
@@ -66,7 +66,7 @@ function handleValidate() {
         }
     }
 
-    $nullValues = array_filter([$name, $birthDay, $age], function($value) {
+    $nullValues = array_filter([$name, $birthday, $age], function($value) {
         return $value === null || $value === '';
     });
 
@@ -93,7 +93,7 @@ try {
             return; 
         }
 
-        $resumeId = insertCurriculum($data['name'], $data['birthDay'], $data['age']);
+        $resumeId = insertCurriculum($data['name'], $data['birthday'], $data['age']);
 
         foreach($data['experiences'] as $experience) {
             insertExperience($resumeId, $experience['position'], $experience['company'], $experience['startDate'], $experience['endDate'], $experience['description']);
